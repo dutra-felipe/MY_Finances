@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = "container mt-4">
+    <h3 class="display-6">Detalhes do Investimento</h3>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> {{ object.symbol }} </h3>
+            <p class="card-text"> Tipo de Investimento: {{ object.investment_type }}</p>
+            <p class="card-text"> Operação: {{ object.get_operation_display }}</p>
+            <p class="card-text"> Quantia: <strong>R$ {{ object.amount }}</strong></p>
+            <p class="card-text"> Quantidade: <strong>{{ object.quantity }}</strong></p>
+            
+            {% if object.investment_type.name == "Ação" %}
+            <p class="card-text"> 
+                {% if stock_info %}
+            Informações da Ação:
+            <ul>
+                <li>Preço Atual: <strong>R$ {{ stock_info.currentPrice }}</strong> </li>
+                <li>Preço Alvo máximo: R$ {{ stock_info.targetHighPrice }}</li>
+                <li>Preço Alvo mínimo: R$ {{ stock_info.targetLowPrice }}</li>
+                <li>Recomendação: <strong>{{ stock_info.recommendationKey }}</strong></li>
+                <li>Dividend Rate Anual: R$ {{ stock_info.dividendRate }}</li>
+                <li>P/VPA: {{ stock_info.priceToBook }}</li>
+                <li>Descrição: {{ stock_info.longBusinessSummary }}</li>
+            </ul>
+                {% endif %}
+            </p>
+
+            {% elif object.investment_type.name == "FIIs" %}
+            <p class="card-text">
+                {% if stock_info %}
+                Detalhes dos FIIs:</p>
+                <ul>
+                    <li>Nome: {{ stock_info.longName }}</li>
+                    <li>Valor da Cota: <strong>R$ {{ stock_info.currentPrice }}</strong></li>
+                    <li>Último dividendo: <strong>R$ {{ stock_info.lastDividendValue }}</strong></li>
+                    <li>Volume de Negociação: {{ stock_info.volume }}</li>
+                </ul>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    <a href="{% url 'investments_list' %}" class="btn btn-secondary mt-3">Cancelar e Voltar</a>
+</div>
+
+{% endblock %}

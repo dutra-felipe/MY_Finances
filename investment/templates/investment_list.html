@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}
+MY Finances - Investimentos
+{% endblock %}
+
+{% block content %}
+
+<div class = "row mb-3">
+    <div class = "col-md-6">
+        <form method = "get" action = "{% url 'investments_list' %}">
+            <div class = "input-group">
+                <input type = "text" class="form-control" name="name" placeholder="Investimentos" value="{{ request.GET.name }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'investments_create' %}" class="btn btn-success float-end">
+            <i class="bi bi-plus"></i>
+            Criar Investimento
+        </a>
+    </div>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <form method="get" action="{% url 'investments_list' %}">
+            <div class="input-group">
+                <select class="form-select" name="investment_type">
+                    <option value="" {% if not request.GET.investment_type  %} selected {% endif %}> Todos os tipos de Investimento</option>
+                    {% for types in type %}
+                      <option value="{{ types.id }}" {% if request.GET.investment_type == types.id|stringformat:"s" %} selected {% endif %}>{{ types.name }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-filter"></i> Filtrar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class = "table-responsive">
+    <table class = "table table-striped table-bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th>Investimentos</th>
+                <th>Tipo de Investimento</th>
+                <th>Operação</th>
+                <th>Quantia</th>
+                <th>Quantidade</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for obj in investments %}
+                <tr>
+                    <td>{{ obj.name }}</td>
+                    <td>{{ obj.investment_type }}</td>
+                    <td>{{ obj.get_operation_display }}</td>
+                    <td>{{ obj.amount }}</td>
+                    <td>{{ obj.quantity }}</td>
+                    <td>
+                        <a href="{% url 'investments_detail' obj.id %}" class="btn btn-info btn btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'investments_update' obj.id %}" class="btn btn-warning btn btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'investments_delete' obj.id %}" class="btn btn-danger btn btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'components/_pagination.html' %}
+
+{% endblock %}

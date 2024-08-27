@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+<div class = "container mt-4">
+    <h3 class="display-6">Detalhes dos Dividendos</h3>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> {{ object.name }} </h3>
+            
+            <p class="card-text">
+            {% if stock_info %}
+            Informações dos Dividendos:
+            <ul>
+                <li>Último Dividendo: R$ {{ stock_info.lastDividendValue }}</li>
+                <li>Data do último dividendo: {{ stock_info.lastDividendDate|convert_unix_timestamp }}</li>
+                <li>Dividend Yield: {{ stock_info.dividendYield|to_percentage }}</li>
+                <li>Dividend Rate Anual: R$ {{ stock_info.dividendRate }}</li>
+            </ul>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+    <a href="{% url 'dividend_list' %}" class="btn btn-secondary mt-3">Cancelar e Voltar</a>
+</div>
+
+{% endblock %}

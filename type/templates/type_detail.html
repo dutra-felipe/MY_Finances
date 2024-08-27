@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = "container mt-4">
+    <h3 class="display-6">Detalhes Tipo de Investimento</h3>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> {{ object.name }} </h3>
+            <!--INSERIR DESCRIÇÃO LLAMA-->
+        </div>
+    </div>
+    <a href="{% url 'type_list' %}" class="btn btn-secondary mt-3">Cancelar e Voltar</a>
+</div>
+
+{% endblock %}

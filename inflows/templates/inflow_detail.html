@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class = "container mt-4">
+    <h3 class="display-6">Detalhes da Compra</h3>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title"> {{ object.asset }} </h3>
+            <p class="card-text"> Quantidade: <strong>{{ object.quantity }}</strong></p>
+            <p class="card-text"> Valor: <strong>{{ object.amount }}</strong></p>
+            <p class="card-text"> 
+                <ul>
+                    <li>Preço em {{ object.created_at }}: <strong>R$ {{ stock_info.date }}</strong> </li>
+                    <li>Preço Atual: <strong>R$ {{ stock_info.currentPrice }}</strong></li>
+                    <li>Preço Médio: <strong>R$ {{ stock_info.averageprice }}</strong></li>
+                    <li>Valorização em relação ao preço médio: <strong>{{ stock_info.valorization }}%</strong></li>
+                </ul>
+            </p>
+        </div>
+    </div>
+    <a href="{% url 'inflows_list' %}" class="btn btn-secondary mt-3">Cancelar e Voltar</a>
+</div>
+
+{% endblock %}

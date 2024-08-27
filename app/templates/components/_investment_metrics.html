@@ -1,0 +1,43 @@
+<div class="card mt-4">
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col md-3">
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Quantidade de Ativos</h5>
+                        <p class="card-text text-white font-weight-bold display-6">{{ investment_metrics.total_quantity }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col md-3">
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Valor Investido</h5>
+                        <p class="card-text text-white font-weight-bold display-6">R$ {{ investment_metrics.wallet_amount }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col md-3">
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Valorização Total</h5>
+                        <p class="card-text text-white font-weight-bold display-6">{{ investment_metrics.valorization }}%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col md-3">
+                <div class="card bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Dividendos</h5>
+                        <p class="card-text text-white font-weight-bold display-6">R$ {{ investment_metrics.dividends }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

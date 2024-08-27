@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}
+MY Finances - Vendas
+{% endblock %}
+
+{% block content %}
+
+<div class = "row mb-3">
+    <div class = "col-md-6">
+        <form method = "get" action = "{% url 'outflows_list' %}">
+            <div class = "input-group">
+                <input type = "text" class="form-control" name="asset" placeholder="Ativo" value="{{ request.GET.asset }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'outflows_create' %}" class="btn btn-success float-end">
+            <i class="bi bi-plus"></i>
+            Nova Venda
+        </a>
+    </div>
+</div>
+
+<div class = "table-responsive">
+    <table class = "table table-striped table-bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th>Ativos</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+                <th>Data de Venda</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for object in outflows %}
+                <tr>
+                    <td>{{ object.asset }}</td>
+                    <td>{{ object.quantity }}</td>
+                    <td>R$ {{ object.amount }}</td>  
+                    <td>{{ object.created_at }}</td> 
+                    <td>
+                        <a href="{% url 'outflows_detail' object.id %}" class="btn btn-info btn btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'outflows_delete' object.id %}" class="btn btn-danger btn btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'components/_pagination.html' %}
+
+{% endblock %}

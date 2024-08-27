@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    MY FInances - Dashboard
+{% endblock %}
+
+{% block content %}
+    {% include 'components/_investment_metrics.html' %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="row mt-4 justify-content-center">
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">Valorização da Carteira</h5>
+            <canvas id="dailyInvestValorizationChart"></canvas>
+        </div>
+        <div class="col-md-6 text-center">
+            <h5 class="text-center mb-3">Total Investido</h5>
+            <canvas id="amountInvestChart"></canvas>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              var dailyValorizationData = JSON.parse('{{ daily_valorization_data|safe }}');
+              var amountData = JSON.parse('{{ amount_data|safe }}');
+        
+              var ctxDailySales = document.getElementById('dailyInvestValorizationChart').getContext('2d');
+              var dailyInvestValorizationChart = new Chart(ctxDailySales, {
+                type: 'line',
+                data: {
+                  labels: dailyValorizationData.dates,
+                  datasets: [{
+                    label: 'Valorização da Carteira em %',
+                    data: dailyValorizationData.values,
+                    fill: false,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 2,
+                    tension: 0.5
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+        
+              var ctxAmountInvest = document.getElementById('amountInvestChart').getContext('2d');
+              var amountInvestChart = new Chart(ctxAmountInvest, {
+                type: 'bar',
+                data: {
+                  labels: amountData.dates,
+                  datasets: [{
+                    label: 'Total Investido em R$',
+                    data: amountData.values,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
+            });
+          </script>
+    </div>
+
+    <div class="row mt-4 justify-content-center">
+      <div class="col-md-6 text-center">
+          <h5 class="text-center mb-3">Divisão da Carteira</h5>
+          <div class="mb-4"></div>
+          <div class="embed-responsive embed-responsive-1by1" style="width: 400px; display: inline-block;">
+            <canvas id="walletDivisionChart" class="embed-responsive-item"></canvas>
+          </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <h5 class="text-center mb-3">Alocação da Carteira</h5>
+        <div class="mb-4"></div>
+        <div style="width: 400px; display: inline-block;">
+          <canvas id="walletAllocationChart" class="embed-responsive-item"></canvas>
+        </div>
+    </div>
+
+      <script>
+          document.addEventListener("DOMContentLoaded", function() {  
+          var walletDivision = JSON.parse('{{ wallet_division|safe }}');
+          var walletAllocation = JSON.parse('{{ wallet_allocation|safe }}');
+    
+          var ctxDivision = document.getElementById('walletDivisionChart').getContext('2d');
+          var walletDivisionChart = new Chart(ctxDivision, {
+            type: 'doughnut',
+            data: {
+              labels: Object.keys(walletDivision),
+              datasets: [{
+                data: Object.values(walletDivision),
+                borderWidth: 1
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  display: false
+                },
+              }
+            }
+          });
+    
+          var ctxAllocation = document.getElementById('walletAllocationChart').getContext('2d');
+          var walletAllocationChart = new Chart(ctxAllocation, {
+            type: 'pie',
+            data: {
+              labels: Object.keys(walletAllocation),
+              datasets: [{
+                data: Object.values(walletAllocation),
+                borderWidth: 1
+              }]
+            },
+            options: {
+              plugins: {
+                legend: {
+                  display: false
+                },
+              }
+            }
+          });
+        });
+        </script>
+  </div>
+{% endblock %}

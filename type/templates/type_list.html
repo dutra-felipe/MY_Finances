@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+MY Finances - Tipos de Investimento
+{% endblock %}
+
+{% block content %}
+
+<div class = "row mb-3">
+    <div class = "col-md-6">
+        <form method = "get" action = "{% url 'type_list' %}">
+            <div class = "input-group">
+                <input type = "text" class="form-control" name="name" placeholder="Tipos de Investimento" value="{{ request.GET.name }}">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <a href="{% url 'type_create' %}" class="btn btn-success float-end">
+            <i class="bi bi-plus"></i>
+            Criar Tipo de Investimento
+        </a>
+    </div>
+</div>
+
+<div class = "table-responsive">
+    <table class = "table table-striped table-bordered">
+        <thead class = "thead-dark">
+            <tr>
+                <th>Tipo de Investimento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for type in types %}
+                <tr>
+                    <td>{{ type.name }}</td>
+                    <!--  <td>{{ type.description }}</td>  </!-->
+                    <td>
+                        <a href="{% url 'type_detail' type.id %}" class="btn btn-info btn btn-sm">
+                            <i class="bi bi-eye"></i>
+                        </a>
+                        <a href="{% url 'type_update' type.id %}" class="btn btn-warning btn btn-sm">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+                        <a href="{% url 'type_delete' type.id %}" class="btn btn-danger btn btn-sm">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include 'components/_pagination.html' %}
+
+{% endblock %}
