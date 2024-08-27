@@ -2,7 +2,6 @@
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Django](https://img.shields.io/badge/Django-5.1-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ## Descrição
 
@@ -75,11 +74,6 @@ O **MY Finances** é uma aplicação web desenvolvida com Django para gerenciar 
 
 3. **Exclusão de Investimentos**:
     - Caso a quantidade de um investimento atinja zero após uma venda, o investimento será automaticamente excluído da lista de investimentos.
-
-
-## Licença
-
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## Contato
 
